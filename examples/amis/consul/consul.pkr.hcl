@@ -42,7 +42,7 @@ source "amazon-ebs" "ubuntu20-ami" {
     application     = "consul"
     consul_version  = "${var.consul_version}"
     owner           = "tphan@hashicorp.com"
-    packer_source   = "https://github.com/phan-t/terraform-consul-upgrade-sim-grab/blob/master/examples/amis/consul/consul.pkr.hcl"
+    packer_source   = "https://github.com/phan-t/terraform-consul-sandpit-grab/blob/master/examples/amis/consul/consul.pkr.hcl"
   }
 }
 
@@ -50,21 +50,21 @@ build {
   sources = ["source.amazon-ebs.ubuntu20-ami"]
 
   provisioner "shell" {
-    inline = ["mkdir -p /tmp/terraform-consul-upgrade-sim-grab/"]
+    inline = ["mkdir -p /tmp/terraform-consul-sandpit-grab/"]
   }
 
   provisioner "shell" {
-    inline       = ["git clone https://github.com/phan-t/terraform-consul-upgrade-sim-grab.git /tmp/terraform-consul-upgrade-sim-grab"]
+    inline       = ["git clone https://github.com/phan-t/terraform-consul-sandpit-grab.git /tmp/terraform-consul-sandpit-grab"]
     pause_before = "30s"
   }
 
   provisioner "shell" {
-    inline       = ["if test -n \"${var.consul_download_url}\"; then", "/tmp/terraform-consul-upgrade-sim-grab/examples/scripts/install-consul --download-url ${var.consul_download_url};", "else", "/tmp/terraform-consul-upgrade-sim-grab/examples/scripts/install-consul --version ${var.consul_version};", "fi"]
+    inline       = ["if test -n \"${var.consul_download_url}\"; then", "/tmp/terraform-consul-sandpit-grab/examples/scripts/install-consul --download-url ${var.consul_download_url};", "else", "/tmp/terraform-consul-sandpit-grab/examples/scripts/install-consul --version ${var.consul_version};", "fi"]
     pause_before = "30s"
   }
   
   provisioner "shell" {
-    inline       = ["/tmp/terraform-consul-upgrade-sim-grab/examples/scripts/setup-systemd-resolved"]
+    inline       = ["/tmp/terraform-consul-sandpit-grab/examples/scripts/setup-systemd-resolved"]
     pause_before = "30s"
   }
 }
