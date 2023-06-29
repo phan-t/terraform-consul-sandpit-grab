@@ -1,0 +1,24 @@
+# Installs the fake-service as a service for systemd on linux
+NAME=fake-service
+
+sudo cat << EOF > /etc/systemd/system/${NAME}.service
+[Unit]
+Description=${NAME}
+
+[Service]
+ExecStart=/opt/fake-service/bin/${NAME}
+User=fake-service
+Group=fake-service
+LimitMEMLOCK=infinity
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+EnvironmentFile=/opt/fake-service/config/fake-service.config
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo chmod 664 /etc/systemd/system/${NAME}.service
+sudo systemctl daemon-reload
+sudo systemctl enable ${NAME}
+sudo systemctl start ${NAME}
