@@ -59,12 +59,12 @@ build {
   }
 
   provisioner "shell" {
-    inline       = ["if test -n \"${var.consul_download_url}\"; then", "/tmp/terraform-consul-sandpit-grab/examples/scripts/install-consul --download-url ${var.consul_download_url};", "else", "/tmp/terraform-consul-sandpit-grab/examples/scripts/install-consul --version ${var.consul_version};", "fi"]
+    inline       = ["if test -n \"${var.consul_download_url}\"; then", "/tmp/terraform-consul-sandpit-grab/examples/amis/consul/scripts/install-consul --download-url ${var.consul_download_url};", "else", "/tmp/terraform-consul-sandpit-grab/examples/amis/consul/scripts/install-consul --version ${var.consul_version};", "fi"]
     pause_before = "30s"
   }
   
   provisioner "shell" {
-    inline       = ["/tmp/terraform-consul-sandpit-grab/examples/scripts/setup-systemd-resolved"]
+    inline       = ["/tmp/terraform-consul-sandpit-grab/examples/amis/consul/scripts/setup-systemd-resolved"]
     pause_before = "30s"
   }
 }
