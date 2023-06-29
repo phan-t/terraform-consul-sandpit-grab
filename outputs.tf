@@ -18,3 +18,9 @@ output "consul_ui_url" {
   description = "Consul ui url"
   value       = "https://${module.consul-server.ui_fqdn}"
 }
+
+output "consul_intial_acl_token" {
+  description = "Consul initial acl token"
+  value       = random_uuid.consul-initial-acl-token.result
+  sensitive   = true
+}
