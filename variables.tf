@@ -3,7 +3,7 @@
 variable "deployment_name" {
   description = "deployment name, used to prefix resources"
   type        = string
-  default     = "grab-sim"
+  default     = "grab-sandpit"
 }
 
 // amazon web services (aws) variables
