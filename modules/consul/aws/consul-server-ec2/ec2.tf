@@ -62,11 +62,11 @@ resource "aws_instance" "consul-server" {
 
 resource "local_file" "consul-server-config" {
   content = templatefile("${path.root}/examples/templates/consul-server-ec2-config.hcl.tpl", {
-    datacenter_name       = local.datacenter_name
-    quorum_size           = 1
-    node_name             = aws_instance.consul-server.private_dns
-    initial_acl_token     = var.initial_acl_token
-    gossip_encrypt_key    = var.gossip_encrypt_key
+    datacenter_name    = local.datacenter_name
+    quorum_size        = 1
+    node_name          = aws_instance.consul-server.private_dns
+    acl_token          = var.initial_acl_token
+    gossip_encrypt_key = var.gossip_encrypt_key
     })
   filename = "${path.module}/configs/server-config.hcl.tmp"
   
@@ -75,7 +75,7 @@ resource "local_file" "consul-server-config" {
   ]
 }
 
-resource "null_resource" "consul-server-config" {
+resource "null_resource" "consul-server" {
   connection {
     host          = aws_instance.consul-server.private_dns
     user          = "ubuntu"

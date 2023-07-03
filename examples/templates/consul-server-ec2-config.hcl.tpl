@@ -31,8 +31,8 @@ acl = {
   default_policy = "deny"
   enable_token_persistence = true
   tokens = {
-    master = "${initial_acl_token}"
-    agent = "${initial_acl_token}"
+    master = "${acl_token}"
+    agent = "${acl_token}"
   }
 }
 
