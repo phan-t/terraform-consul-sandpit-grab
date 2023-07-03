@@ -34,7 +34,7 @@ output "consul_server_private_ip" {
   value       = module.consul-server.private_ip
 }
 
-output "consul_intial_acl_token" {
+output "consul_initial_acl_token" {
   description = "Consul initial acl token"
   value       = random_uuid.consul-initial-acl-token.result
   sensitive   = true
