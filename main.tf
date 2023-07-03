@@ -34,6 +34,8 @@ module "infra-aws" {
   eks_worker_desired_capacity = var.aws_eks_worker_desired_capacity
 }
 
+// consul server on aws ec2
+
 module "consul-server" {
   source = "./modules/consul/aws/consul-server-ec2"
 
