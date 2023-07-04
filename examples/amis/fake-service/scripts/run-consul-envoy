@@ -12,6 +12,7 @@ After=syslog.target network.target
 ExecStart=/opt/consul/bin/consul connect envoy -sidecar-for ${APP_NAME}
 ExecStop=/bin/sleep 5
 Restart=always
+EnvironmentFile=/opt/consul/config/client-env-vars
 
 [Install]
 WantedBy=multi-user.target

@@ -100,6 +100,17 @@ resource "local_file" "fake-service-service-register" {
   ]
 }
 
+resource "local_file" "consul-client-env-vars" {
+  content = templatefile("../../../examples/templates/consul-client-env-vars.tpl", {
+    acl_token          = var.client_acl_token
+    })
+  filename = "${path.module}/configs/client-env-vars.tmp"
+  
+  depends_on = [
+    aws_instance.fake-service
+  ]
+}
+
 resource "null_resource" "fake-service" {
   connection {
     host          = aws_instance.fake-service.private_dns
@@ -122,6 +133,11 @@ resource "null_resource" "fake-service" {
   provisioner "file" {
     content      = local_file.fake-service-service-register.content
     destination = "/tmp/fake-service-service-register.json"
+  }
+
+  provisioner "file" {
+    content      = local_file.consul-client-env-vars.content
+    destination = "/tmp/client-env-vars"
   }
 
   provisioner "file" {
@@ -148,7 +164,8 @@ resource "null_resource" "fake-service" {
     inline = [
       "sudo cp /tmp/client-config.hcl /opt/consul/config/default.hcl",
       "sudo cp /tmp/fake-service.config /opt/fake-service/config/fake-service.config",
-      "sudo cp /tmp/fake-service-service-register.json /opt/consul/config/fake-service-service-register.json",     
+      "sudo cp /tmp/fake-service-service-register.json /opt/consul/config/fake-service-service-register.json",
+      "sudo cp /tmp/client-env-vars /opt/consul/config/client-env-vars",  
       "sudo cp /tmp/consul-ent-license.hclic /opt/consul/bin/consul-ent-license.hclic",
       "sudo cp /tmp/ca-cert.pem /opt/consul/tls/ca-cert.pem",
       "sudo cp /tmp/client-cert.pem /opt/consul/tls/client-cert.pem",
