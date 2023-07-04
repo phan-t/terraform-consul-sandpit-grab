@@ -100,7 +100,7 @@ build {
   }
 
   provisioner "shell" {
-    inline       = ["cp /tmp/terraform-consul-sandpit-grab/examples/amis/fake-service/scripts/run-consul-envoy /opt/consul/bin/run-consul-envoy"]
+    inline       = ["sudo cp /tmp/terraform-consul-sandpit-grab/examples/amis/fake-service/scripts/run-consul-envoy /opt/consul/bin/run-consul-envoy"]
     pause_before = "30s"
   }
 
