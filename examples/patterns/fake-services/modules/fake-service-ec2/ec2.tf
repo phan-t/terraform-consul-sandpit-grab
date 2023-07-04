@@ -80,7 +80,7 @@ resource "local_file" "fake-service-config" {
     upstream_uris         = ""
     name                  = "fake-service"
     })
-  filename = "${path.module}/configs/fake-service.config"
+  filename = "${path.module}/configs/fake-service.config.tmp"
   
   depends_on = [
     aws_instance.fake-service
@@ -171,7 +171,8 @@ resource "null_resource" "fake-service" {
       "sudo cp /tmp/client-cert.pem /opt/consul/tls/client-cert.pem",
       "sudo cp /tmp/client-key.pem /opt/consul/tls/client-key.pem",
       "sudo /opt/consul/bin/run-consul --client --skip-consul-config",
-      "sudo /opt/fake-service/bin/run-fake-service"
+      "sudo /opt/fake-service/bin/run-fake-service",
+      "sudo /opt/consul/bin/run-consul-envoy ${var.service_name}"
     ]
   }
 
