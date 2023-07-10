@@ -9,7 +9,7 @@ variable "aws_region" {
 
 variable "consul_version" {
   type    = string
-  default = "1.10.12+ent"
+  default = "1.16.0+ent"
 }
 
 variable "consul_download_url" {
@@ -19,7 +19,7 @@ variable "consul_download_url" {
 
 variable "envoy_version" {
   type    = string
-  default = "1.18.6"
+  default = "1.26.2"
 }
 
 variable "application_name" {
