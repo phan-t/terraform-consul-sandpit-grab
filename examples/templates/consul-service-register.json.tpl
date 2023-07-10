@@ -11,6 +11,9 @@
           "${tags}"
         ],
       "port": ${port},
+      "connect": {
+        "sidecar_service": {}
+        },
       "checks": [
         {
           "id": "tcp",
