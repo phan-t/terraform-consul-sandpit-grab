@@ -12,6 +12,7 @@ After=syslog.target network.target
 ExecStart=/opt/consul/bin/consul connect envoy -sidecar-for ${APP_NAME}
 ExecStop=/bin/sleep 5
 Restart=always
+EnvironmentFile=/opt/consul/config/client-env-vars
 
 [Install]
 WantedBy=multi-user.target
@@ -19,7 +20,6 @@ EOF
 
 sudo chmod 664 /tmp/${NAME}.service
 sudo cp /tmp/${NAME}.service /etc/systemd/system/${NAME}.service
-#sudo chmod 664 /etc/systemd/system/${NAME}.service
 sudo systemctl daemon-reload
 sudo systemctl enable ${NAME}
-#sudo systemctl start ${NAME}
+sudo systemctl start ${NAME}

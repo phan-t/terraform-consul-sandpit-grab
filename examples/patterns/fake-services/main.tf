@@ -20,3 +20,9 @@ module "fake-service-ec2" {
   client_acl_token    = data.terraform_remote_state.tcm.outputs.consul_initial_acl_token
   gossip_encrypt_key  = data.terraform_remote_state.tcm.outputs.consul_gossip_encrypt_key
 }
+
+// fake-service on aws eks
+
+module "fake-service-eks" {
+  source = "./modules/fake-service-eks"
+}

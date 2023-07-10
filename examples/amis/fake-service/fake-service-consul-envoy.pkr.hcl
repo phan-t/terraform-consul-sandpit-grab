@@ -89,7 +89,7 @@ build {
     pause_before = "30s"
   }
 
-    provisioner "shell" {
+  provisioner "shell" {
     inline       = ["sudo curl -L https://func-e.io/install.sh | bash -s -- -b /tmp", "/tmp/func-e use ${var.envoy_version}", "sudo cp ~/.func-e/versions/${var.envoy_version}/bin/envoy /usr/local/bin/"]
     pause_before = "30s"
   } 
@@ -98,4 +98,10 @@ build {
     inline       = ["if test -n \"${var.fake_service_download_url}\"; then", "/tmp/terraform-consul-sandpit-grab/examples/amis/fake-service/scripts/install-fake-service --download-url ${var.fake_service_download_url};", "else", "/tmp/terraform-consul-sandpit-grab/examples/amis/fake-service/scripts/install-fake-service --version ${var.fake_service_version};", "fi"]
     pause_before = "30s"
   }
+
+  provisioner "shell" {
+    inline       = ["sudo cp /tmp/terraform-consul-sandpit-grab/examples/amis/fake-service/scripts/run-consul-envoy /opt/consul/bin/run-consul-envoy"]
+    pause_before = "30s"
+  }
+
 }

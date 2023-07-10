@@ -80,7 +80,7 @@ resource "local_file" "fake-service-config" {
     upstream_uris         = ""
     name                  = "fake-service"
     })
-  filename = "${path.module}/configs/fake-service.config"
+  filename = "${path.module}/configs/fake-service.config.tmp"
   
   depends_on = [
     aws_instance.fake-service
@@ -94,6 +94,17 @@ resource "local_file" "fake-service-service-register" {
     port                  = 9090
     })
   filename = "${path.module}/configs/fake-service-service-register.json.tmp"
+  
+  depends_on = [
+    aws_instance.fake-service
+  ]
+}
+
+resource "local_file" "consul-client-env-vars" {
+  content = templatefile("../../../examples/templates/consul-client-env-vars.tpl", {
+    acl_token          = var.client_acl_token
+    })
+  filename = "${path.module}/configs/client-env-vars.tmp"
   
   depends_on = [
     aws_instance.fake-service
@@ -125,6 +136,11 @@ resource "null_resource" "fake-service" {
   }
 
   provisioner "file" {
+    content      = local_file.consul-client-env-vars.content
+    destination = "/tmp/client-env-vars"
+  }
+
+  provisioner "file" {
     source      = "../../../consul-ent-license.hclic"
     destination = "/tmp/consul-ent-license.hclic"
   }
@@ -148,13 +164,15 @@ resource "null_resource" "fake-service" {
     inline = [
       "sudo cp /tmp/client-config.hcl /opt/consul/config/default.hcl",
       "sudo cp /tmp/fake-service.config /opt/fake-service/config/fake-service.config",
-      "sudo cp /tmp/fake-service-service-register.json /opt/consul/config/fake-service-service-register.json",     
+      "sudo cp /tmp/fake-service-service-register.json /opt/consul/config/fake-service-service-register.json",
+      "sudo cp /tmp/client-env-vars /opt/consul/config/client-env-vars",  
       "sudo cp /tmp/consul-ent-license.hclic /opt/consul/bin/consul-ent-license.hclic",
       "sudo cp /tmp/ca-cert.pem /opt/consul/tls/ca-cert.pem",
       "sudo cp /tmp/client-cert.pem /opt/consul/tls/client-cert.pem",
       "sudo cp /tmp/client-key.pem /opt/consul/tls/client-key.pem",
       "sudo /opt/consul/bin/run-consul --client --skip-consul-config",
-      "sudo /opt/fake-service/bin/run-fake-service"
+      "sudo /opt/fake-service/bin/run-fake-service",
+      "sudo /opt/consul/bin/run-consul-envoy ${var.service_name}"
     ]
   }
 
