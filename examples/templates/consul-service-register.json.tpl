@@ -4,7 +4,7 @@
       "name": "${service_name}",
       "meta": [
         {
-          "type": "${type}",
+          "type": "${type}"
         }
       ],
       "tags": [

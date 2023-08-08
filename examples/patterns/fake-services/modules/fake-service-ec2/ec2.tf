@@ -78,7 +78,7 @@ resource "local_file" "consul-client-config" {
 resource "local_file" "fake-service-config" {
   content = templatefile("../../../examples/templates/fake-service.config.tpl", {
     upstream_uris         = ""
-    name                  = "fake-service"
+    name                  = "vm"
     })
   filename = "${path.module}/configs/fake-service.config.tmp"
   
@@ -91,6 +91,7 @@ resource "local_file" "fake-service-service-register" {
   content = templatefile("../../../examples/templates/consul-service-register.json.tpl", {
     service_name          = var.service_name
     tags                  = var.service_name
+    type                  = "vm"
     port                  = 9090
     })
   filename = "${path.module}/configs/fake-service-service-register.json.tmp"

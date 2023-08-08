@@ -55,7 +55,8 @@ resource "kubernetes_deployment" "fake-service" {
           app = "fake-service"
         }
         annotations = {
-          "consul.hashicorp.com/connect-inject" = true           
+          "consul.hashicorp.com/connect-inject" = true    
+          "consul.hashicorp.com/service-meta-type" = "k8s"       
         }
       }
       spec {
@@ -67,11 +68,11 @@ resource "kubernetes_deployment" "fake-service" {
           }
           env {
             name = "LISTEN_ADDR"
-            value = "9090"
+            value = "0.0.0.0:9090"
           }
           env {
             name = "NAME"
-            value = "service-a"
+            value = "k8s"
           }
         }
         service_account_name = "fake-service"
