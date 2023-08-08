@@ -1,0 +1,11 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: fake-service
+spec:
+  defaultSubset: vm
+  subsets:
+    vm:
+      filter: 'Service.Meta.type == vm'
+    k8s:
+      filter: 'Service.Meta.type == k8s'

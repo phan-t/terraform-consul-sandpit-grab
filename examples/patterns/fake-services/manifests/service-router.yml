@@ -1,0 +1,13 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: fake-service
+spec:
+  routes:
+    - match:
+        http:
+          header:
+            - name: x-type
+              exact: 'k8s'
+      destination:
+        serviceSubset: k8s
