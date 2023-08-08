@@ -57,15 +57,17 @@ module "consul-client-eks" {
   source    = "./modules/consul/aws/consul-client-eks"
 
   deployment_id             = local.deployment_id
-  cluster_name              = "cauldron"
   consul_version            = var.consul_client_version
   consul_helm_chart_version = var.consul_helm_chart_version
   consul_k8s_version        = var.consul_k8s_version
   envoy_version             = var.envoy_version
   server_address            = module.consul-server.private_ip
-  acl_token                 = random_uuid.consul-initial-acl-token.result
+  client_acl_token          = random_uuid.consul-initial-acl-token.result
   gossip_encrypt_key        = random_id.consul-gossip-encrypt-key.b64_std
   replicas                  = var.consul_replicas
+  kubernetes_api_endpoint   = data.aws_eks_cluster.cluster.endpoint
+  ca_key                    = module.consul-server.ca_key
+  ca_cert                   = module.consul-server.ca_cert
   
   depends_on = [
     module.consul-server

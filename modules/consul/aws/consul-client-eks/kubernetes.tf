@@ -15,6 +15,9 @@ resource "kubernetes_secret" "consul-client-secrets" {
   }
 
   data = {
+    token = var.client_acl_token
     gossipEncryptionKey = var.gossip_encrypt_key
+    caCert = var.ca_cert
+    caKey = var.ca_key
   }
 }

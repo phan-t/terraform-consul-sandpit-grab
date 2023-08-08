@@ -1,11 +1,13 @@
 resource "local_file" "consul-client-helm-values" {
   content = templatefile("${path.root}/examples/templates/consul-client-eks-helm.yml.tpl", {
-    datacenter_name    = "${local.datacenter_name}"
-    consul_version     = var.consul_version
-    consul_k8s_version = var.consul_k8s_version
-    envoy_version      = var.envoy_version
-    server_address     = var.server_address
-    acl_token          = var.acl_token
+    datacenter_name         = "${local.datacenter_name}"
+    consul_version          = var.consul_version
+    consul_k8s_version      = var.consul_k8s_version
+    envoy_version           = var.envoy_version
+    server_address          = var.server_address
+    acl_token               = var.client_acl_token
+    kubernetes_api_endpoint = var.kubernetes_api_endpoint
+    replicas                = var.replicas
     })
   filename = "${path.module}/configs/consul-client-eks-helm-values.yml.tmp"
 }

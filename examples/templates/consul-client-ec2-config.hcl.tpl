@@ -9,7 +9,7 @@ license_path = "/opt/consul/bin/consul-ent-license.hclic"
 ports = {  dns = -1
   http = -1
   https = 8501
-  grpc = 8502
+  grpc_tls = 8502
   serf_lan = 8301
   serf_wan = 8302
   server = 8300

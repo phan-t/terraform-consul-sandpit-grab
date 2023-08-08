@@ -109,23 +109,3 @@ resource "local_file" "ca-cert" {
   content  = tls_self_signed_cert.ca-cert.cert_pem
   filename = "${path.root}/tls/ca-cert.pem"
 }
-
-# resource "local_file" "server-cert" {
-#   content  = tls_locally_signed_cert.server-signed-cert.cert_pem
-#   filename = "${path.module}/tls/server-cert.pem"
-# }
-
-# resource "local_file" "server-key" {
-#   content  = tls_private_key.server-key.private_key_pem
-#   filename = "${path.module}/tls/server-key.pem"
-# }
-
-# resource "local_file" "ui-cert" {
-#   content  = tls_locally_signed_cert.ui-signed-cert.cert_pem
-#   filename = "${path.module}/tls/ui-cert.pem"
-# }
-
-# resource "local_file" "ui-key" {
-#   content  = tls_private_key.ui-key.private_key_pem
-#   filename = "${path.module}/tls/ui-key.pem"
-# }

@@ -24,8 +24,19 @@ module "eks" {
       vpc_security_group_ids = [module.sg-consul.security_group_id]
     }
   }
-}
 
+  cluster_security_group_additional_rules = {
+    ingress_kubernetes_endpoint_api = {
+      description                = "kubernetes endpoint api"
+      protocol                   = "tcp"
+      from_port                  = 443
+      to_port                    = 443
+      type                       = "ingress"
+      cidr_blocks                = ["${module.vpc.vpc_cidr_block}"]
+    }
+  }
+}
+    
 resource "null_resource" "kubeconfig" {
 
   provisioner "local-exec" {

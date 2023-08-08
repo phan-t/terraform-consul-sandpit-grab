@@ -19,7 +19,7 @@ variable "server_address" {
 }
 
 variable "client_acl_token" {
-  description = "consul initial acl token"
+  description = "consul client acl token"
   type        = string
 }
 

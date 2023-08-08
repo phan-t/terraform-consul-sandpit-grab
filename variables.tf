@@ -39,7 +39,7 @@ variable "aws_route53_sandbox_prefix" {
 variable "aws_eks_cluster_version" {
   description = "aws eks cluster version"
   type        = string
-  default     = "1.22"
+  default     = "1.23"
 }
 
 variable "aws_eks_cluster_service_cidr" {
@@ -57,7 +57,7 @@ variable "aws_eks_worker_instance_type" {
 variable "aws_eks_worker_desired_capacity" {
   description = "aws eks desired worker capacity in the autoscaling group"
   type        = number
-  default     = 3
+  default     = 2
 }
 
 // hashicorp self-managed consul variables
