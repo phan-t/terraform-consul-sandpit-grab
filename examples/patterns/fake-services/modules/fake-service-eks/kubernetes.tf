@@ -40,7 +40,7 @@ resource "kubernetes_deployment" "fake-service" {
     namespace = "fake-service"
   }
   spec {
-    replicas = 1
+    replicas = 20
 
     selector {
       match_labels = {
@@ -67,7 +67,7 @@ resource "kubernetes_deployment" "fake-service" {
           }
           env {
             name = "LISTEN_ADDR"
-            value = "9090"
+            value = "0.0.0.0:9090"
           }
           env {
             name = "NAME"
